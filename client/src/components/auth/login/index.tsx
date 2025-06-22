@@ -22,24 +22,46 @@ const Login = () => {
     <div className='container'>
       <h2>Welcome to FakeStackOverflow!</h2>
       <h3>Please login to continue.</h3>
-      {/* TODO: Task 1 - Correctly handle form submission */}
-      <form>
+      {/* DONE: Task 1 - Correctly handle form submission */}
+      <form onSubmit={handleSubmit}>
         <h4>Please enter your username.</h4>
-        {/* TODO: Task 1 - Add an input field for the username input.
+        {/* DONE: Task 1 - Add an input field for the username input.
         The input field should correctly update the displayed value when text
         is entered. Use the 'input-text' class for styling.
         */}
+        <input
+          type='text'
+          value={username}
+          className='input-text'
+          placeholder='Enter username'
+          onChange={e => handleInputChange(e, 'username')}
+          required
+        />
         <h4>Please enter your password.</h4>
-        {/* TODO: Task 1 - Add an input field for the password input.
+        {/* DONE: Task 1 - Add an input field for the password input.
         The input field should correctly update the value when text
         is entered. Make sure that the password visibility is correctly toggled.
         Use the 'input-text' class for styling.
         */}
+        <input
+          type={showPassword ? 'text' : 'password'}
+          value={password}
+          className='input-text'
+          placeholder='Enter password'
+          onChange={event => handleInputChange(event, 'password')}
+          required
+        />
         <div className='show-password'>
-          {/* TODO: Task 1 - Add a checkbox input field for the visibility toggle.
+          {/* DONE: Task 1 - Add a checkbox input field for the visibility toggle.
         The field should correctly update the password visibility when checked/unchecked.
         Use the id 'showPasswordToggle'. No styling class is required here.
         */}
+          <input
+            type='checkbox'
+            checked={showPassword}
+            id='showPasswordToggle'
+            onChange={togglePasswordVisibility}
+          />
           <label htmlFor='showPasswordToggle'>Show Password</label>
         </div>
         <button type='submit' className='login-button'>
