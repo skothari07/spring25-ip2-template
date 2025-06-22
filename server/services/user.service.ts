@@ -54,7 +54,16 @@ export const getUserByUsername = async (username: string): Promise<UserResponse>
  * @returns {Promise<UsersResponse>} - Resolves with the found user objects (without the passwords) or an error message.
  */
 export const getUsersList = async (): Promise<UsersResponse> => {
-  // TODO: Task 1 - Implement the getUsersList function
+  // DONE: Task 1 - Implement the getUsersList function
+  try {
+    const usersList: UsersResponse = await UserModel.find().select('-password');
+    if (!usersList) {
+      throw new Error('Could not retrieve users');
+    }
+    return usersList;
+  } catch (error) {
+    return { error: `Error occurred while retrieving users: ${error}` };
+  }
 };
 
 /**
