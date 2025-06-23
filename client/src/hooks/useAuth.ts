@@ -75,8 +75,9 @@ const useAuth = (authType: 'login' | 'signup') => {
 
     if (authType === 'signup' && password !== passwordConfirmation) {
       setErr('Password and Password confirmation do not match');
+      return false;
     }
-
+    setErr('');
     return true;
   };
 
