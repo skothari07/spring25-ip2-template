@@ -20,11 +20,14 @@ const useAllGamesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchGames = async () => {
-    // TODO: Task 2 - Fetch and update the list of available games state
+    // DONE: Task 2 - Fetch and update the list of available games state
+    const allGames = await getGames(undefined, undefined);
+    setAvailableGames(allGames);
   };
 
   const handleCreateGame = async (gameType: GameType) => {
-    // TODO: Task 2 - Create a new game with the provided type
+    // DONE: Task 2 - Create a new game with the provided type
+    await createGame(gameType);
     fetchGames(); // Refresh the list after creating a game
   };
 
@@ -32,14 +35,20 @@ const useAllGamesPage = () => {
     navigate(`/games/${gameID}`);
   };
 
-  // TODO: Task 2 - Implement the `useEffect` hook to fetch the list of available games on component mount
+  // DONE: Task 2 - Implement the `useEffect` hook to fetch the list of available games on component mount
+  useEffect(() => {
+    fetchGames();
+  }, []);
 
   const handleToggleModal = () => {
-    // TODO: Task 2 - Toggle the visibility of the game creation modal
+    // DONE: Task 2 - Toggle the visibility of the game creation modal
+    setIsModalOpen(prevState => !prevState);
   };
 
   const handleSelectGameType = (gameType: GameType) => {
-    // TODO: Task 2 - Create a new game with the selected game type and toggle the modal
+    // DONE: Task 2 - Create a new game with the selected game type and toggle the modal
+    handleCreateGame(gameType);
+    handleToggleModal();
   };
 
   return {
