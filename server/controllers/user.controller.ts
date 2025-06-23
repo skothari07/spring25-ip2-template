@@ -199,12 +199,12 @@ const userController = (socket: FakeSOSocket) => {
     try {
       // DONE: Task 1 - Implement the updateBiography function, including request validation
       if (
-        req.body !== undefined &&
-        req.body.username !== undefined &&
-        req.body.username !== '' &&
-        req.body.biography !== undefined
+        !req.body ||
+        typeof req.body.username !== 'string' ||
+        req.body.username.trim() === '' ||
+        typeof req.body.biography !== 'string'
       ) {
-        res.status(400).send('Invalid user body');
+        res.status(400).send('Invalid request body');
         return;
       }
 
@@ -223,7 +223,7 @@ const userController = (socket: FakeSOSocket) => {
       });
 
       // DONE: Task 1 - Return the updated user object
-      res.status(200).json(updateUser);
+      res.status(200).json(updatedUser);
     } catch (error) {
       // DONE: Task 1 - Handle errors appropriately
       res.status(500).send(`Error occurred while updating user biography: ${error}`);
