@@ -57,8 +57,8 @@ const AllGamesPage = () => {
           <div className='game-items'>
             {/* DONE: Task 2 - Map over the list of available games and render a `GameCard` component for each game. 
             Make sure the key for each component is _unique_. */}
-            {availableGames.map(game => (
-              <GameCard game={game} key={game.gameID} handleJoin={handleJoin} />
+            {availableGames.map(eachGame => (
+              <GameCard game={eachGame} key={eachGame.gameID} handleJoin={handleJoin} />
             ))}
           </div>
         </div>
