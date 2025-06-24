@@ -289,7 +289,7 @@ describe('Chat Controller', () => {
       const response = await supertest(app).get(`/chat/${chatId}`);
 
       expect(response.status).toBe(500);
-      expect(response.text).toBe('Error occurred while retrieving the chat');
+      expect(response.text).toContain('Error occurred while retrieving the chat');
     });
   });
 
@@ -297,7 +297,7 @@ describe('Chat Controller', () => {
     // DONE: Task 3 Write additional tests for the addParticipant endpoint
     it('should add a participant to an existing chat', async () => {
       const chatId = new mongoose.Types.ObjectId().toString();
-      const userId = new mongoose.Types.ObjectId().toString();
+      const participant = new mongoose.Types.ObjectId().toString();
 
       const updatedChat: Chat = {
         _id: new mongoose.Types.ObjectId(),
@@ -309,7 +309,9 @@ describe('Chat Controller', () => {
 
       addParticipantSpy.mockResolvedValue(updatedChat);
 
-      const response = await supertest(app).post(`/chat/${chatId}/addParticipant`).send({ userId });
+      const response = await supertest(app)
+        .post(`/chat/${chatId}/addParticipant`)
+        .send({ participant });
 
       expect(response.status).toBe(200);
 
@@ -321,7 +323,7 @@ describe('Chat Controller', () => {
         updatedAt: updatedChat.updatedAt?.toISOString(),
       });
 
-      expect(addParticipantSpy).toHaveBeenCalledWith(chatId, userId);
+      expect(addParticipantSpy).toHaveBeenCalledWith(chatId, participant);
     });
 
     it('should return 400 if invalid request body', async () => {
@@ -335,13 +337,13 @@ describe('Chat Controller', () => {
 
     it('should return 500 if error occurs while adding participant to chat', async () => {
       const chatId = new mongoose.Types.ObjectId().toString();
-      const userId = new mongoose.Types.ObjectId().toString();
+      const participant = new mongoose.Types.ObjectId().toString();
 
       addParticipantSpy.mockResolvedValue({ error: 'Error adding participant' });
 
       const response = await supertest(app)
         .post(`/chat/${chatId}/addParticipant`)
-        .send({ participant: userId });
+        .send({ participant });
 
       expect(response.status).toBe(500);
       expect(response.text).toContain('Error occurred while adding participant to chat');

@@ -34,7 +34,7 @@ const chatController = (socket: FakeSOSocket) => {
   const isCreateChatRequestValid = (req: CreateChatRequest): boolean => {
     // DONE: Task 3 - Implement the isCreateChatRequestValid function.
     const { participants, messages } = req.body;
-    return Array.isArray(participants) && participants.length > 0 && !!messages;
+    return Array.isArray(participants) && participants.length > 0 && !!messages && !!participants;
   };
 
   /**
@@ -249,13 +249,13 @@ const chatController = (socket: FakeSOSocket) => {
     // The socket room will be defined to have the chat ID as the room name
     // TODO: Task 3 - Implement the `leaveChat` event listener on `conn`
     // You should only leave the chat if the chat ID is provided/defined
-    conn.on('joinChat', (chatID: string) => {
-      conn.join(chatID);
+    conn.on('joinChat', (chatId: string) => {
+      conn.join(chatId);
     });
 
-    conn.on('leaveChat', (chatID: string | undefined) => {
-      if (chatID) {
-        conn.leave(chatID);
+    conn.on('leaveChat', (chatId: string | undefined) => {
+      if (chatId) {
+        conn.leave(chatId);
       }
     });
   });
